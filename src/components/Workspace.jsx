@@ -304,7 +304,8 @@ function Workspace() {
         const handleInviteByLink = () => {
             const currentUrl = window.location.href; // Get the current page URL
             let linkToCopy = currentUrl; // Default to current URL
-            linkToCopy += `?currentWorkspace=${currentWorkspace}&${permission}`; // Append workspace name for edit permission
+            linkToCopy.replace('/workspace')
+            linkToCopy += `/workspace/?currentWorkspace=${currentWorkspace}&${permission}`; // Append workspace name for edit permission
 
             // if (permission === 'edit') {
             // }
