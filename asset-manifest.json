@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/formbotfrontend/static/css/main.98594151.css",
+    "main.js": "/formbotfrontend/static/js/main.d23550bb.js",
+    "static/js/453.5d82a506.chunk.js": "/formbotfrontend/static/js/453.5d82a506.chunk.js",
+    "static/media/landing_img.png": "/formbotfrontend/static/media/landing_img.038c5ea140eb7429e803.png",
+    "static/media/bg_landing.svg": "/formbotfrontend/static/media/bg_landing.f2ed787e8e6fb16866cce0b76f6c6b2a.svg",
+    "static/media/arch.svg": "/formbotfrontend/static/media/arch.d6aefe74f6f10bdc72e3c7bfe7c0b5bf.svg",
+    "static/media/triangle.svg": "/formbotfrontend/static/media/triangle.6446481943955bac743907f1eb75c431.svg",
+    "static/media/logo.svg": "/formbotfrontend/static/media/logo.9fa2c273eb2e698dfc779258e10070ed.svg",
+    "static/media/video.svg": "/formbotfrontend/static/media/video.65a1d8cac02ef2c9fbb9dfbb87494a3c.svg",
+    "static/media/google.svg": "/formbotfrontend/static/media/google.8684dab1d4b0124af0498b06da4839ee.svg",
+    "static/media/bg_user.svg": "/formbotfrontend/static/media/bg_user.f14081571706da47d3a69d61db9916a9.svg",
+    "static/media/email.svg": "/formbotfrontend/static/media/email.c4c59061797ca697dbc40d6980520791.svg",
+    "index.html": "/formbotfrontend/index.html",
+    "static/media/image.svg": "/formbotfrontend/static/media/image.0f428e78b192365249654b7e638a3b19.svg",
+    "static/media/date.svg": "/formbotfrontend/static/media/date.5137c5fadaedbebfcbf9ca13a2d107ee.svg",
+    "static/media/logout.svg": "/formbotfrontend/static/media/logout.09b1e9b595a4bdd74c943ab35f08b071.svg",
+    "static/media/moon.svg": "/formbotfrontend/static/media/moon.e2222d35ddc4eed2746efd03bacf55e6.svg",
+    "static/media/number.svg": "/formbotfrontend/static/media/number.5a195c18fc42a5e9e6d6a74fbdb209c4.svg",
+    "static/media/sun.svg": "/formbotfrontend/static/media/sun.75ad86a59ac3f9e2f8a8b4a1a28e8a7a.svg",
+    "static/media/trash.svg": "/formbotfrontend/static/media/trash.9fea17ccfe468fd660937c722b785c75.svg",
+    "static/media/text.svg": "/formbotfrontend/static/media/text.e924dfcb848876613a1ce6e679fff447.svg",
+    "static/media/input-text.svg": "/formbotfrontend/static/media/input-text.061e69d53a40253e48080097183e1c4d.svg",
+    "static/media/rating.svg": "/formbotfrontend/static/media/rating.198adbd442f7fabb2fc469bce653d157.svg",
+    "static/media/send.svg": "/formbotfrontend/static/media/send.6c73334e7cc4d56fe2096b41472d24d6.svg",
+    "static/media/startFlag.svg": "/formbotfrontend/static/media/startFlag.027a472361903d6edda8d8649f8009f7.svg",
+    "main.98594151.css.map": "/formbotfrontend/static/css/main.98594151.css.map",
+    "main.d23550bb.js.map": "/formbotfrontend/static/js/main.d23550bb.js.map",
+    "453.5d82a506.chunk.js.map": "/formbotfrontend/static/js/453.5d82a506.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.98594151.css",
+    "static/js/main.d23550bb.js"
+  ]
+}
