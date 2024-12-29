@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/formbotfrontend/static/css/main.98594151.css",
-    "main.js": "/formbotfrontend/static/js/main.d6ce285a.js",
+    "main.js": "/formbotfrontend/static/js/main.d23550bb.js",
     "static/js/453.5d82a506.chunk.js": "/formbotfrontend/static/js/453.5d82a506.chunk.js",
     "static/media/landing_img.png": "/formbotfrontend/static/media/landing_img.038c5ea140eb7429e803.png",
     "static/media/bg_landing.svg": "/formbotfrontend/static/media/bg_landing.f2ed787e8e6fb16866cce0b76f6c6b2a.svg",
@@ -26,11 +26,11 @@
     "static/media/send.svg": "/formbotfrontend/static/media/send.6c73334e7cc4d56fe2096b41472d24d6.svg",
     "static/media/startFlag.svg": "/formbotfrontend/static/media/startFlag.027a472361903d6edda8d8649f8009f7.svg",
     "main.98594151.css.map": "/formbotfrontend/static/css/main.98594151.css.map",
-    "main.d6ce285a.js.map": "/formbotfrontend/static/js/main.d6ce285a.js.map",
+    "main.d23550bb.js.map": "/formbotfrontend/static/js/main.d23550bb.js.map",
     "453.5d82a506.chunk.js.map": "/formbotfrontend/static/js/453.5d82a506.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.98594151.css",
-    "static/js/main.d6ce285a.js"
+    "static/js/main.d23550bb.js"
   ]
 }
