@@ -5,7 +5,7 @@ import trashIcon from '../assets/trash.svg'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import startFlag from '../assets/startFlag.svg'
-import { color } from 'chart.js/helpers';
+// import { color } from 'chart.js/helpers';
 import o_video from '../assets/video.svg'
 import o_text from '../assets/text.svg'
 import i_text from '../assets/input-text.svg'
@@ -15,7 +15,7 @@ import i_email from '../assets/email.svg'
 import i_rating from '../assets/rating.svg'
 import i_number from '../assets/number.svg'
 import o_image from '../assets/image.svg'
-import { PieChart } from 'react-minimal-pie-chart';
+// import { PieChart } from 'react-minimal-pie-chart';
 
 const FormBot = () => {
     const { isDarkMode, toggleDarkMode } = useDarkMode();
@@ -316,10 +316,10 @@ const FormBot = () => {
                     </div>
                     <div style={{display:'flex', justifyContent:'center'}}>
                         
-                        <PieChart data={[ { title: 'Filled', value: wholeForm.filled_forms.length, color: '#1A5FFF' }, 
+                        {/* <PieChart data={[ { title: 'Filled', value: wholeForm.filled_forms.length, color: '#1A5FFF' }, 
                             { title: 'Total', value:wholeForm.opened-wholeForm.filled_forms.length, color: '#AAAAAA' } ]}
                             style={{width:'35%'}}
-                            lineWidth={25}></PieChart>
+                            lineWidth={25}></PieChart> */}
                     </div>
                 </div>
             )}
