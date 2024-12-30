@@ -30,8 +30,8 @@ function App() {
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/workspace" element={<Workspace />} />
                     <Route path="/settings" element={<Settings />} />
-                    <Route path="/answer/:formbotId" element={<Answer />} />
-                    <Route path="/formbot/:formbotId" element={<FormBot />} />
+                    <Route path="/answer/:workspaceId/:folderId/:formbotId" element={<Answer />} />
+                    <Route path="/formbot/:workspaceId/:folderId/:formbotId" element={<FormBot />} />
                 </Routes>
             </Router>
         </DarkModeProvider>

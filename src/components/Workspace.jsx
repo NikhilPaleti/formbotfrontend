@@ -15,7 +15,7 @@ function Workspace() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [folders, setFolders] = useState([]); // State for folders
     const [formbots, setFormbots] = useState([]); // State for formbots
-    const [currentFolder, setCurrentFolder] = useState('/'); // New state for current folder
+    const [currentFolder, setCurrentFolder] = useState('root'); // New state for current folder
     const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
     const [isShareModalOpen, setIsShareModalOpen] = useState(false); // State for share modal visibility
     const [Editable, setEditStatus] = useState(false);
@@ -25,6 +25,7 @@ function Workspace() {
     const [folderToDelete, setFolderToDelete] = useState('');
     const [isDeleteFormbotModalOpen, setIsDeleteFormbotModalOpen] = useState(false);
     const [formbotToDelete, setFormbotToDelete] = useState('');
+    
 
     useEffect(() => {
         fetchWorkspaces();
@@ -175,10 +176,16 @@ function Workspace() {
         setIsDeleteFormbotModalOpen(true);
     };
 
-    // New function to create a folder
+    // Function to handle folder creation with validation for name
     const handleCreateFolder = async (folderName) => {
         const email = localStorage.getItem('fp1_email');
         const workspaceId = currentWorkspace;
+        const validName = /^[A-Za-z]+$/; // Regex to check if the name contains only alphabets
+
+        if (!validName.test(folderName)) {
+            toast.error('Folder name should contain only alphabets.');
+            return;
+        }
 
         try {
             const response = await fetch(`https://formbot-backend-2mmu.onrender.com/addFolder/${workspaceId}/folder`, {
@@ -261,10 +268,9 @@ function Workspace() {
             // Logic to invite by email
             // console.log(`Inviting ${email} with ${permission} permission`);
 
-            // Check if email is valid
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-                console.error('Invalid email format');
+                // console.error('Invalid email format');
                 toast.error('Please enter a valid email address.');
                 return;
             }
@@ -274,7 +280,7 @@ function Workspace() {
             // }
 
             try {
-                const response = await fetch(`https://formbot-backend-2mmu.onrender.com/updateWorkspace/${currentWorkspace}`, {
+                const response = await fetch(`http://localhost:5000/updateWorkspace/${currentWorkspace}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -283,12 +289,10 @@ function Workspace() {
                         sharedWith: [{ email, access: permission }] // Add email with permission
                     }),
                 });
-
-                if (!response.ok) {
-                    throw new Error('Failed to update workspace');
-                }
-
                 const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || "network error");
+                }
                 // console.log(data.message); // Log success message
                 toast.success(`Successfully invited *THAT* person (${email})!`); // Notify user of success
 
@@ -368,6 +372,12 @@ function Workspace() {
                 const email = localStorage.getItem('fp1_email');
                 const workspaceId = currentWorkspace;
                 const folderName = currentFolder; // Assuming currentFolder holds the name of the folder
+                const validName = /^[A-Za-z]+$/; // Regex to check if the name contains only alphabets
+
+                if (!validName.test(formbotName)) {
+                    toast.error('FormBot name should contain only alphabets.');
+                    return;
+                }
 
                 try {
                     const response = await fetch('https://formbot-backend-2mmu.onrender.com/createFormbot', {
@@ -389,7 +399,7 @@ function Workspace() {
                         return toast.error('Error creating FormBot: ' + errorData.error);
                     }
                     const data = await response.json();
-                    window.location.href = `/formbot/${formbotName}`
+                    window.location.href = `/formbot/${workspaceId}/${folderName}/${formbotName}`;
                     await fetchFormbots(currentWorkspace, currentFolder); // Refresh formbot list after creation
                     setFormbotName(''); // Reset input
                     onClose(); // Close modal
@@ -502,7 +512,7 @@ function Workspace() {
                 toast.error('Error deleting formbot: ' + error.message); // Notify user of error
             }
     };
-
+    // THIS IS THE MAIN RETURN FUNCTION.
     return (
         <div className={isDarkMode ? 'dark-mode' : 'light-mode'}>
             <ToastContainer />
@@ -515,8 +525,8 @@ function Workspace() {
                                 <a key={workspace.name} onClick={() => {
                                     setCurrentWorkspace(workspace.name);
                                     fetchFolders(workspace.name); // Fetch folders for the current workspace
-                                    setCurrentFolder('/')
-                                    fetchFormbots(workspace.name, '/');
+                                    setCurrentFolder('root')
+                                    fetchFormbots(workspace.name, 'root');
                                     const entry = workspace.sharedWith.find(user => user.email === localStorage.getItem('fp1_email'));
                                     if (entry.access === 'edit') {
                                         setEditStatus(true);
@@ -553,12 +563,14 @@ function Workspace() {
             <div className="file-explorer">
                 <div className="folders">
                     {Editable && <div onClick={() => setIsModalOpen(true)} className='folder'>Create Folder</div>}
-                    <div onClick={() => handleFolderClick('/')} className='folder'> /(Root)</div>
+                    <div onClick={() => handleFolderClick('root')} className='folder'> /(Root)</div>
                     {folders.map(folder => (
-                        <div key={folder} className="folder" onClick={() => handleFolderClick(folder)}>
-                            <span style={{ marginRight: '0.5rem', backgroundColor: '#AAAAAA' }}>{folder}</span>
-                            {Editable && <img src={trashIcon} style={{ border: 'none', backgroundColor: '#AAAAAA' }} onClick={() => handleDeleteFolder(folder)}></img>}
-                        </div>
+                        folder !== 'root' && ( //Janky check to ensure root doesn't "appear twice"
+                            <div key={folder} className="folder" onClick={() => handleFolderClick(folder)}>
+                                <span style={{ marginRight: '0.5rem', backgroundColor: '#AAAAAA' }}>{folder}</span>
+                                {Editable && <img src={trashIcon} style={{ border: 'none', backgroundColor: '#AAAAAA' }} onClick={() => handleDeleteFolder(folder)}></img>}
+                            </div>
+                        )
                     ))}
                 </div>
                 <div className="formbots">
@@ -566,7 +578,7 @@ function Workspace() {
                     {formbots.map(formbot => (
                         <div key={formbot.name} className="formbot-card" >
                             {Editable && <img src={trashIcon} style={{ border: 'none', backgroundColor: 'rgba(0,0,0,0)', position:'absolute', top:'0', right:'0', padding:'0.5rem', zIndex:'2' }} onClick={() => handleDeleteFormbot(formbot.name)}></img>}
-                            <span style={{cursor:'pointer', backgroundColor:'rgba(0,0,0,0)', padding:'2rem'}} onClick={() => window.location.href = `/formbot/${formbot.name}`} >{formbot.name}</span>
+                            <span style={{cursor:'pointer', backgroundColor:'rgba(0,0,0,0)', padding:'2rem'}} onClick={() => window.location.href = `/formbot/${currentWorkspace}/${currentFolder}/${formbot.name}`} >{formbot.name}</span>
                         </div>
                     ))}
                 </div>

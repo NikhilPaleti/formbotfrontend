@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-// import { useHistory } from 'react-router-dom';
 import GoogleSVG from '../assets/google.svg';
-import bgUser from '../assets/bg_user.svg';
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'
+import bgUserTriangles from '../assets/bgUserTriangles.svg'
+import bgUserRS from '../assets/bgUserRS.svg'
+import bgUserBS from '../assets/bgUserBS.svg'
+import { useNavigate } from 'react-router-dom'
+import eyeSVG from '../assets/eye.svg'; 
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const history = useHistory();
+    const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false); 
 
     const handleLogin = () => {
         // Validate email format
@@ -40,15 +44,11 @@ const LoginPage = () => {
             return response.json();
         })
         .then(data => {
-            // console.log('Login successful:', data);
-            // Store the token in localStorage or sessionStorage
             toast.success("Login Success!")
             localStorage.setItem('fp1_user_jwt', data.token);
             localStorage.setItem('fp1_email', userData.email);
             window.location.href='/workspace'
 
-            // Redirect to another page after successful login
-            // history.push('/dashboard'); // Change to your desired route
         })
         .catch(error => {
             // console.log('There was a problem with the login:', error);
@@ -57,9 +57,10 @@ const LoginPage = () => {
     };
 
     return (
-        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', backgroundColor: '#171923', textAlign:'left', backgroundImage: `url(${bgUser})`, backgroundSize:'contain', backgroundRepeat: 'no-repeat'}}>
+        <div className='reglog-main' style={{ 
+            backgroundImage: `url(${bgUserTriangles}), url(${bgUserRS}), url(${bgUserBS})`}}>
             <ToastContainer />
-            <button /*onClick={() => history.goBack()}*/ style={{ position:'fixed', left:'5vw', top:'10vh', fontSize:'3.5rem', background: 'rgba(1,1,1,0)', border:'0', color:'#ffffff'  }}> &lt; </button>
+            <button onClick={() => navigate(-1)} style={{ position:'fixed', left:'5vw', top:'10vh', fontSize:'3.5rem', background: 'rgba(1,1,1,0)', border:'0', color:'#ffffff'  }}> &lt; </button>
             {/* <h2>Login</h2> */}
             <div style={{}}>
             <label style={{paddingLeft:'1rem', color:'#ffffff'}}> E-Mail </label> <br />
@@ -74,12 +75,18 @@ const LoginPage = () => {
             <div>
             <label style={{paddingLeft:'1rem', color:'#ffffff'}}> Password </label> <br />
             <input 
-                type="password" 
+                type={showPassword ? "text" : "password"} 
                 placeholder="Password" 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)} 
                 className='input-fields' 
             />
+            </div>
+            <div onClick={() => { setShowPassword(!showPassword)}} style={{display: "flex", gap:'1rem', alignItems:'center'}}> <img 
+                src={eyeSVG} 
+                alt="All shall be revealed"  
+                style={{ cursor: 'pointer'  }} 
+            />  <p style={{color:"white"}}>All shall be revealed</p> 
             </div>
             <button onClick={handleLogin} className='clickBtn' style={{ marginTop: '3vh', marginBottom:'3vh' }}>
                 Log In

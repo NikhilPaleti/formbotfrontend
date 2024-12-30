@@ -15,11 +15,11 @@ import i_email from '../assets/email.svg'
 import i_rating from '../assets/rating.svg'
 import i_number from '../assets/number.svg'
 import o_image from '../assets/image.svg'
-// import { PieChart } from 'react-minimal-pie-chart';
+import { PieChart } from 'react-minimal-pie-chart';
 
 const FormBot = () => {
     const { isDarkMode, toggleDarkMode } = useDarkMode();
-    const { formbotId } = useParams();
+    const { workspaceId, folderId, formbotId } = useParams();
     const [formName, setFormName] = useState('');
     const [activeTab, setActiveTab] = useState('Form');
     const [formData, setFormData] = useState([]);
@@ -53,7 +53,7 @@ const FormBot = () => {
     useEffect(() => {
         const fetchFormData = async () => {
             try {
-                const response = await fetch(`https://formbot-backend-2mmu.onrender.com/fetchFormbot/${formbotId}`);
+                const response = await fetch(`https://formbot-backend-2mmu.onrender.com/fetchFormbot/${workspaceId}/${folderId}/${formbotId}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch form data');
                 }
@@ -127,7 +127,7 @@ const FormBot = () => {
         }
 
         try {
-            const response = await fetch(`https://formbot-backend-2mmu.onrender.com/modifyFormbot/${formbotId}`, {
+            const response = await fetch(`https://formbot-backend-2mmu.onrender.com/modifyFormbot/${workspaceId}/${folderId}/${formbotId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -138,11 +138,11 @@ const FormBot = () => {
                 }),
             });
 
+            const result = await response.json();
             if (!response.ok) {
-                throw new Error('Failed to save form data');
+                throw new Error(result.error || 'Failed to save form data');
             }
 
-            const result = await response.json();
             // console.log(result.message); 
             toast.success("Saved form details");
             if (formName != formbotId) {
@@ -307,6 +307,7 @@ const FormBot = () => {
             )}
             {activeTab === 'Response' && (
                 <div className={isDarkMode ? 'dark-mode responses' : 'light-mode responses'}>
+                    <ToastContainer />
                     <div className='stat-container'>
                         <p className='stat'>People who filled the form <br />{wholeForm.filled_forms.length}</p>
                         <p className='stat'>People who opened the form <br /> {wholeForm.opened}</p>
@@ -316,10 +317,10 @@ const FormBot = () => {
                     </div>
                     <div style={{display:'flex', justifyContent:'center'}}>
                         
-                        {/* <PieChart data={[ { title: 'Filled', value: wholeForm.filled_forms.length, color: '#1A5FFF' }, 
+                        <PieChart data={[ { title: 'Filled', value: wholeForm.filled_forms.length, color: '#1A5FFF' }, 
                             { title: 'Total', value:wholeForm.opened-wholeForm.filled_forms.length, color: '#AAAAAA' } ]}
                             style={{width:'35%'}}
-                            lineWidth={25}></PieChart> */}
+                            lineWidth={25}></PieChart>
                     </div>
                 </div>
             )}

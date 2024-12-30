@@ -1,38 +1,38 @@
 import React from 'react';
-// import { useHistory } from 'react-router-dom';
-import triangle from '../assets/triangle.svg';
+// import triangle from '../assets/triangle.svg';
 import mainLogo from '../assets/logo.svg'
-import arch from '../assets/arch.svg';
 import LandImg from '../assets/landing_img.png';
-import bgLanding from '../assets/bg_landing.svg';
-// import '../index.css'
+import bgLandTriangle from '../assets/bgLandTriangle.svg'
+import bgLandArch from '../assets/bgLandArch.svg'
+import bgLandMC from '../assets/bgLandMC.svg'
+import '../index.css'
+import { useNavigate } from 'react-router-dom'
 
 const LandingPage = () => {
-    // const history = useHistory();
-
+    const navigate = useNavigate();
     return (
         <div style={{width: '100%'}}>
         <nav className='landingNav' style={{  }}>
             <div style={{ display: 'flex', alignItems: 'center', marginLeft: '1.5rem'}}>
                 <img src={mainLogo} alt="Icon" style={{ height: '40px', display: 'inline' }} />
-                <p style={{ color: '#ffffff', margin: '0', paddingLeft: '8px' }}>FormBot</p>
+                <p className='deadToMe' style={{ color: '#ffffff', margin: '0', paddingLeft: '8px' }}>FormBot</p>
             </div>
             <div style={{marginRight: '1.5rem'}}>
                 <button 
                     onClick={() =>  window.location.href = '/login'}
 
-                    style={{margin: '1rem 1rem 1rem 0', minWidth: '40px', borderRadius: '0.5rem', padding: '0.5rem 1rem', border: '2px solid #7EA6FF', backgroundColor: '#171923', color:'#7EA6FF' }}>
+                    style={{margin: '1rem 1rem 1rem 0', minWidth: '40px', height:'2.5rem', borderRadius: '0.5rem', padding: '0.5rem 1rem', border: '2px solid #7EA6FF', backgroundColor: '#171923', color:'#7EA6FF' }}>
                     Sign In
                 </button>
-                <button className='clickBtn' style={{margin: '1rem 0 1rem 0', minWidth: '40px', border: '2px solid #1A5FFF', maxWidth:'10rem'}}>Create a Form Bot</button>
+                <button onClick={() =>  window.location.href = '/register'} className='clickBtn' style={{margin: '1rem 0 1rem 0', minWidth: '40px', border: '2px solid #1A5FFF', maxWidth:'10rem'}}>Create a Form Bot</button>
             </div>
         </nav>
-        <div style={{ textAlign: 'center', margin: '0', padding: '10vh 0 0 0', backgroundColor: '#171923', backgroundImage: `url(${bgLanding})`, backgroundSize:'contain', backgroundRepeat: 'no-repeat'}}>
+        <div className='landing-main' style={{ backgroundImage: `url(${bgLandArch}), url(${bgLandMC}), url(${bgLandTriangle}) ` }}>
             <h1 style={{ fontSize: '4rem', marginBottom:'2vh', color: '#4B83FF' }}>Build advanced chatbots visually</h1>
 
             <p style={{ fontSize: '1.2rem', color: '#ffffff', margin:'0 0 3vh 0' }}>Typebot gives you powerful blocks to create unique chat experiences. <br />
             Embed them anywhere on your web/mobile apps and start collecting results like magic.</p>
-            <button className='clickBtn' style={{  }}>
+            <button className='clickBtn' style={{  }} onClick={() =>  window.location.href = '/login'}>
                 Create a ChatBot for FREE
             </button> <br />
             <img src={LandImg} alt="Landing" style={{ width: '66vw', margin: '5vh 0 10vh 0', borderRadius: '10px' }} />

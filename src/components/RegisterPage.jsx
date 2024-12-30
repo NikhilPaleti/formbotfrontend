@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import GoogleSVG from '../assets/google.svg';
-import bgUser from '../assets/bg_user.svg';
+// import bgUser from '../assets/bg_user.svg';
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'
+import bgUserTriangles from '../assets/bgUserTriangles.svg'
+import bgUserRS from '../assets/bgUserRS.svg'
+import bgUserBS from '../assets/bgUserBS.svg'
+import { useNavigate } from 'react-router-dom'
+import eyeSVG from '../assets/eye.svg'; 
 
 const RegisterPage = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordX, setPasswordX] = useState('');
-    // const history = useHistory();
+    const [showPassword, setShowPassword] = useState(false); 
+    const [showPasswordX, setShowPasswordX] = useState(false); 
+    const navigate = useNavigate();
+
 
     const handleRegister = () => {
         // Validate email format
@@ -17,6 +25,14 @@ const RegisterPage = () => {
         if (!emailRegex.test(email)) {
             console.error('Invalid email format');
             toast.error('Please enter a valid email address.');
+            return;
+        }
+
+        // Check if username contains only alphabets
+        const nameRegex = /^[A-Za-z]+$/; // Regex to allow only alphabets
+        if (!nameRegex.test(username)) {
+            // console.error('Username contains invalid characters');
+            toast.error('Username must contain only alphabets.');
             return;
         }
 
@@ -66,9 +82,9 @@ const RegisterPage = () => {
     };
 
     return (
-        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', backgroundColor: '#171923', backgroundImage: `url(${bgUser})`, backgroundSize:'contain', backgroundRepeat: 'no-repeat', textAlign:'left' }}>
+        <div className='reglog-main' style={{ backgroundImage: `url(${bgUserTriangles}), url(${bgUserRS}), url(${bgUserBS})` }}>
             <ToastContainer />
-            <button /*onClick={() => history.goBack()}*/ style={{ position:'fixed', left:'5vw', top:'10vh', fontSize:'3.5rem', background: 'rgba(1,1,1,0)', border:'0', color:'#ffffff'  }}> &lt; </button>
+            <button onClick={() => navigate(-1)} style={{ position:'fixed', left:'5vw', top:'10vh', fontSize:'3.5rem', background: 'rgba(1,1,1,0)', border:'0', color:'#ffffff'  }}> &lt; </button>
             {/* <h2>REGISTER</h2> */}
             <div>
             <label style={{paddingLeft:'1rem', color:'#ffffff'}}> Username </label> <br />
@@ -94,7 +110,7 @@ const RegisterPage = () => {
             <div>
             <label style={{paddingLeft:'1rem', color:'#ffffff'}}> Password </label> <br />
             <input 
-                type="password" 
+                type={showPassword ? "text" : "password"} // Toggle input type
                 placeholder="Password" 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)} 
@@ -104,13 +120,20 @@ const RegisterPage = () => {
             <div>
             <label style={{paddingLeft:'1rem', color:'#ffffff'}}> Confirm Password </label> <br />
             <input 
-                type="password" 
+                type={showPasswordX ? "text" : "password"} // Toggle input type
                 placeholder="Confirm Password" 
                 value={passwordX} 
                 onChange={(e) => setPasswordX(e.target.value)} 
                
                 className='input-fields' 
             />
+            </div>
+            
+            <div onClick={() => { setShowPassword(!showPassword); setShowPasswordX(!showPassword); }} style={{display: "flex", gap:'1rem', alignItems:'center'}}> <img 
+                src={eyeSVG} 
+                alt="All shall be revealed"  // Toggle visibility on click
+                style={{ cursor: 'pointer'  }} 
+            />  <p style={{color:"white"}}>All shall be revealed</p> 
             </div>
             <button onClick={handleRegister} className='clickBtn' style={{ marginTop: '3vh', marginBottom:'3vh'}}>
                 Register Now
