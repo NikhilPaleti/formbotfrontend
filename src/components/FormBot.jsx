@@ -61,7 +61,7 @@ const FormBot = () => {
                 if (data.commands) {
                     // if(data.commands[data.commands.length-1].type == 'input-text' && data.commands[data.commands.length-1].content == 'x'){
                     //     data.commands.pop();
-                    // } // Some long ass code originally written to test some crap
+                    // } // Some long ass code originally written to test some crap. IGNOREEE
                     setWholeForm(data);
                     setFormData(data.commands);
                 }
@@ -115,7 +115,7 @@ const FormBot = () => {
         //             "content": "x",
         //         }
         //     )
-        // } //S ome long ass code originally written to test some crap
+        // } //S ome long ass code originally written to test some crap. IGGGNOOOOTTTREEEEEEE
 
         const allOutputsFilled = formData.every(item =>
             !item.type.startsWith('output') || (item.type.startsWith('output') && item.content.trim() !== '')
@@ -123,7 +123,7 @@ const FormBot = () => {
 
         if (!allOutputsFilled) {
             toast.error('Please fill in all output fields before saving.');
-            return; // Exit the function if not all output fields are filled
+            return; 
         }
 
         try {
@@ -200,22 +200,22 @@ const FormBot = () => {
                     value={formName}
                     onChange={handleFormNameChange}
                     className='input-fields'
-                    style={{ maxWidth: '15vw' }}
                 />
-                <div >
+                <div className='formNavButtonContainer'> 
                     <button onClick={() => handleTabChange('Form')} className={selectedButton === 'Form' ? 'navButton select' : 'navButton'}>Form</button>
                     <button onClick={() => handleTabChange('Response')} className={selectedButton === 'Response' ? 'navButton select' : 'navButton'}>Response</button>
                 </div>
                 <Slider isDarkMode={isDarkMode} handleToggleDarkMode={handleToggleDarkMode} />
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <button className='clickBtn' style={{ maxWidth: '5rem' }} onClick={handleShare}>Share</button>
-                    <button className='clickBtn' style={{ maxWidth: '5rem' }} onClick={handleSave}>Save</button>
+                <div className='formNavButtonContainer'>
+                    <button className='clickBtn' onClick={handleShare}>Share</button>
+                    <button className='clickBtn' style = {{backgroundColor:'#4ADE80cc'}} onClick={handleSave}>Save</button>
+                    <p onClick={() => window.location.href = '/workspace' }> ❌ </p>
                 </div>
             </nav>
             {activeTab === 'Form' && (
                 <div className={isDarkMode ? 'dark-mode formFlex' : 'light-mode formFlex'}>
                     <ToastContainer />
-                    <div className='fbc-left-part' style={{}}>
+                    <div className={isDarkMode ? 'dark-mode fbc-left-part' : 'light-mode fbc-left-part'} style={{}}>
                         <h4 style={{ marginLeft: '1rem', backgroundColor: 'rgba(0,0,0,0)' }}>Your Message/Output (to user)</h4>
                         <div className='IOOptions'>
                             <br />
@@ -315,12 +315,13 @@ const FormBot = () => {
                     <div style={{ height: '30vh', overflowY: 'auto' }}>
                         <MyTable data={wholeForm} />
                     </div>
-                    <div style={{display:'flex', justifyContent:'center'}}>
+                    <div className='chart-container'>
                         
                         <PieChart data={[ { title: 'Filled', value: wholeForm.filled_forms.length, color: '#1A5FFF' }, 
                             { title: 'Total', value:wholeForm.opened-wholeForm.filled_forms.length, color: '#AAAAAA' } ]}
-                            style={{width:'35%'}}
+                            style={{width:'30%'}}
                             lineWidth={25}></PieChart>
+                            <p className='stat' style={{height: '30%'}}> Completion Rate <br /> {wholeForm.filled_forms.length/wholeForm.opened}</p>
                     </div>
                 </div>
             )}
@@ -329,87 +330,3 @@ const FormBot = () => {
 };
 
 export default FormBot;
-// Larger, commented code -
-// import React, { useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
-
-// const FormBot = () => {
-//     const { formbotId } = useParams(); // Get formbot ID from URL
-//     const [formbotDetails, setFormbotDetails] = useState(null); // State to hold formbot details
-//     const [loading, setLoading] = useState(true); // Loading state
-//     const [error, setError] = useState(null); // Error state
-
-//     useEffect(() => {
-//         // Fetch formbot details using formbotId
-//         const fetchFormbotDetails = async () => {
-//             try {
-//                 const response = await fetch(`/api/formbots/${formbotId}`); // Adjust the API endpoint as needed
-//                 if (!response.ok) {
-//                     throw new Error('Failed to fetch formbot details');
-//                 }
-//                 const data = await response.json();
-//                 setFormbotDetails(data);
-//             } catch (err) {
-//                 setError(err.message);
-//             } finally {
-//                 setLoading(false);
-//             }
-//         };
-
-//         fetchFormbotDetails();
-//     }, [formbotId]);
-
-//     const handleInputChange = (e) => {
-//         const { name, value } = e.target;
-//         setFormbotDetails((prevDetails) => ({
-//             ...prevDetails,
-//             [name]: value,
-//         }));
-//     };
-
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         try {
-//             const response = await fetch(`/api/formbots/${formbotId}`, {
-//                 method: 'PUT', // Assuming you are updating the formbot
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 },
-//                 body: JSON.stringify(formbotDetails),
-//             });
-//             if (!response.ok) {
-//                 throw new Error('Failed to update formbot');
-//             }
-//             // Optionally, redirect or show a success message
-//         } catch (err) {
-//             setError(err.message);
-//         }
-//     };
-
-//     if (loading) return <div>Loading...</div>;
-//     if (error) return <div>Error: {error}</div>;
-
-//     return (
-//         <div>
-//             <h1>Edit FormBot ID: {formbotId}</h1>
-//             <form onSubmit={handleSubmit}>
-//                 <div>
-//                     <label>
-//                         Name:
-//                         <input
-//                             type="text"
-//                             name="name"
-//                             value={formbotDetails.name || ''}
-//                             onChange={handleInputChange}
-//                             required
-//                         />
-//                     </label>
-//                 </div>
-//                 {/* Add more fields as necessary */}
-//                 <button type="submit">Save Changes</button>
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default FormBot;

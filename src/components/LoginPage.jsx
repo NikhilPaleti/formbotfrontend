@@ -15,7 +15,6 @@ const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false); 
 
     const handleLogin = () => {
-        // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             // console.error('Invalid email format');
@@ -23,13 +22,11 @@ const LoginPage = () => {
             return;
         }
 
-        // Prepare data for API
+
         const userData = {
             email,
             password,
         };
-        console.log("gi")
-        // Send data to backend API
         fetch('https://formbot-backend-2mmu.onrender.com/login', {
             method: 'POST',
             headers: {
@@ -64,16 +61,25 @@ const LoginPage = () => {
             {/* <h2>Login</h2> */}
             <div style={{}}>
             <label style={{paddingLeft:'1rem', color:'#ffffff'}}> E-Mail </label> <br />
-            <input 
+            <div className='forEye'>
+                <input 
                 type="email" 
                 placeholder="Email" 
                 value={email} 
                 onChange={(e) => setEmail(e.target.value)} 
                 className='input-fields' 
             />
+            <div style={{display: "inline", opacity:'0', gap:'1rem',alignItems:'center'}}> <img  //The JANK to make the UI consistent. 
+                src={eyeSVG} 
+                alt="Show password"  
+                style={{ cursor: 'pointer'  }} />   
+                </div>
+            </div> 
+
             </div>
             <div>
             <label style={{paddingLeft:'1rem', color:'#ffffff'}}> Password </label> <br />
+            <div className='forEye'>
             <input 
                 type={showPassword ? "text" : "password"} 
                 placeholder="Password" 
@@ -81,12 +87,12 @@ const LoginPage = () => {
                 onChange={(e) => setPassword(e.target.value)} 
                 className='input-fields' 
             />
-            </div>
-            <div onClick={() => { setShowPassword(!showPassword)}} style={{display: "flex", gap:'1rem', alignItems:'center'}}> <img 
+            <div onClick={() => { setShowPassword(!showPassword)}} style={{display: "inline", gap:'1rem',alignItems:'center'}}> <img 
                 src={eyeSVG} 
-                alt="All shall be revealed"  
-                style={{ cursor: 'pointer'  }} 
-            />  <p style={{color:"white"}}>All shall be revealed</p> 
+                alt="Show password"  
+                style={{ cursor: 'pointer'  }} />   
+                </div>
+                </div>
             </div>
             <button onClick={handleLogin} className='clickBtn' style={{ marginTop: '3vh', marginBottom:'3vh' }}>
                 Log In

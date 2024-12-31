@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import triangle from '../assets/triangle.svg';
 import mainLogo from '../assets/logo.svg'
 import LandImg from '../assets/landing_img.png';
@@ -10,6 +10,14 @@ import { useNavigate } from 'react-router-dom'
 
 const LandingPage = () => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const wakeServer = async () => {
+            await fetch('https://formbot-backend-2mmu.onrender.com/wake');
+        };
+        wakeServer();
+    }, []); // this will wake the backend server when the website opens. Hopefully reduces just a little bit of the wait time
+
     return (
         <div style={{width: '100%'}}>
         <nav className='landingNav' style={{  }}>
@@ -31,7 +39,8 @@ const LandingPage = () => {
             <h1 style={{ fontSize: '4rem', marginBottom:'2vh', color: '#4B83FF' }}>Build advanced chatbots visually</h1>
 
             <p style={{ fontSize: '1.2rem', color: '#ffffff', margin:'0 0 3vh 0' }}>Typebot gives you powerful blocks to create unique chat experiences. <br />
-            Embed them anywhere on your web/mobile apps and start collecting results like magic.</p>
+            Embed them anywhere on your web/mobile apps and start collecting results like magic. <br />
+            NOTE - The backend server can take 1min+ to wake from sleep on the first use</p>
             <button className='clickBtn' style={{  }} onClick={() =>  window.location.href = '/login'}>
                 Create a ChatBot for FREE
             </button> <br />

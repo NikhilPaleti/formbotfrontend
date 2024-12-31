@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import sendSVG from '../assets/send.svg';
-import { ToastContainer, toast } from 'react-toastify'; 
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import userIC from '../assets/user.svg'
 
 const Answer = () => {
     const { workspaceId, folderId, formbotId } = useParams();
@@ -54,7 +55,7 @@ const Answer = () => {
         if (index < commands.length) {
             const command = commands[index];
             setIsInputEnabled(command.type.startsWith('input'));
-            
+
             if (!command.type.startsWith('input')) {
                 setTimeout(() => {
                     setCurrentCommandIndex(index + 1);
@@ -67,11 +68,11 @@ const Answer = () => {
     };
 
     const handleUserResponse = async (response) => {
-        const newResponse = { 
-            command: commands[currentCommandIndex], 
-            response: response.toString() 
+        const newResponse = {
+            command: commands[currentCommandIndex],
+            response: response.toString()
         };
-        
+
         const updatedResponses = [...userResponses, newResponse];
         setUserResponses(updatedResponses);
 
@@ -137,8 +138,8 @@ const Answer = () => {
                 return (
                     <div className="rating-container">
                         {[1, 2, 3, 4, 5].map((num) => (
-                            <div 
-                                key={num} 
+                            <div
+                                key={num}
                                 className={`rating-item ${userInput === num.toString() ? 'selected' : ''}`}
                                 onClick={() => handleRatingInput(num)}
                             >
@@ -165,7 +166,9 @@ const Answer = () => {
                 <>
                     <div className="messages">
                         {commands.slice(0, currentCommandIndex).map((command, index) => (
+
                             <div key={index} className={`message ${command.type.includes('output') ? 'computer' : 'user'}`}>
+                                {command.type.includes('output') && (<img src={userIC} style={{ borderRadius: '500px', width: '2rem', display: 'inline' }} />)}
                                 {command.type.includes('output-text') && <p>{command.content}</p>}
                                 {command.type.includes('output-image') && <img src={command.content} alt="Output" />}
                                 {command.type.includes('input') && (
@@ -176,11 +179,11 @@ const Answer = () => {
                     </div>
                     <form className='answerForm' onSubmit={handleSubmit}>
                         {renderInputField()}
-                        <button 
-                            className='clickBtn' 
-                            style={{ 
-                                backgroundColor: isInputEnabled ? '#1A5FFF' : '#AAAAAA', 
-                                width: '3rem' 
+                        <button
+                            className='clickBtn'
+                            style={{
+                                backgroundColor: isInputEnabled ? '#1A5FFF' : '#AAAAAA',
+                                width: '3rem'
                             }}
                         >
                             <img style={{ width: '2rem' }} src={sendSVG} alt="Send" />

@@ -13,6 +13,7 @@ function Settings() {
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); 
+    const [showPasswordX, setShowPasswordX] = useState(false); 
 
     async function handleUpdate() {
         const userData = {
@@ -55,7 +56,7 @@ function Settings() {
         localStorage.removeItem('fp1_user_jwt');
         localStorage.removeItem('fp1_email');
         localStorage.getItem('fp1_username');
-        window.location.href = "/workspace"
+        window.location.href = "/"
     };
 
     return (
@@ -72,6 +73,12 @@ function Settings() {
                     className='input-fields' 
                     // style={{ width: '60%' }}
                 />
+                
+            <div style={{display: "inline", opacity:'0', gap:'1rem',alignItems:'center'}}> <img 
+                src={eyeSVG} 
+                alt="Show password"  
+                style={{ cursor: 'pointer'  }} />   
+                </div>
             </div>
             <div className='settingChild'>
                 {/* <label style={{paddingLeft: '1rem'}}>(New) Email</label> */}
@@ -83,6 +90,12 @@ function Settings() {
                     className='input-fields' 
                     // style={{ width: '60%' }}
                 />
+                
+            <div style={{display: "inline", opacity:'0', gap:'1rem',alignItems:'center'}}> <img 
+                src={eyeSVG} 
+                alt="Show password"  
+                style={{ cursor: 'pointer'  }} />   
+                </div>
             </div>
             <div className='settingChild'>
                 {/* <label style={{paddingLeft: '1rem'}}>Old Password</label> */}
@@ -94,24 +107,29 @@ function Settings() {
                     className='input-fields' 
                     // style={{ width: '60%' }}
                 />
+                <div onClick={() => { setShowPassword(!showPassword)}} style={{display: "inline", gap:'1rem',alignItems:'center'}}> <img 
+                src={eyeSVG} 
+                alt="Show password"  
+                style={{ cursor: 'pointer'  }} />   
+                </div>  
+                
             </div>
             <div className='settingChild'>
                 {/* <label style={{paddingLeft: '1rem'}}>New Password</label> */}
                 <input
-                    type={showPassword ? "text" : "password"} 
+                    type={showPasswordX ? "text" : "password"} 
                     value={newPassword}
                     placeholder="New Password"
                     onChange={(e) => setNewPassword(e.target.value)}
                     className='input-fields' 
-                    // style={{ width: '60%' }}
                 />
-            </div>  
-            <div onClick={() => { setShowPassword(!showPassword)}} style={{display: "flex", gap:'1rem',alignItems:'center'}}> <img 
+                <div onClick={() => { setShowPasswordX(!showPasswordX)}} style={{display: "inline", gap:'1rem',alignItems:'center'}}> <img 
                 src={eyeSVG} 
-                alt="All shall be revealed"  
-                style={{ cursor: 'pointer'  }} 
-            />  <p style={{}}>All shall be revealed</p> 
-            </div>
+                alt="Show password"  
+                style={{ cursor: 'pointer'  }} />   
+                </div>
+            </div>  
+            
             <button onClick={handleUpdate} className='clickBtn'>Update</button>
             <button onClick={handleLogout} style={{position:'fixed', left:'5vw', bottom:'10vh', fontSize:'1.5rem', background: 'rgba(1,1,1,0)', border:'0',  color:'#CF3636'}}> <img style={{height:'1.2rem'}} src={logoutIcon} /> Log Out</button>
         </div>

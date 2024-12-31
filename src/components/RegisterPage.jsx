@@ -20,7 +20,6 @@ const RegisterPage = () => {
 
 
     const handleRegister = () => {
-        // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             console.error('Invalid email format');
@@ -28,30 +27,27 @@ const RegisterPage = () => {
             return;
         }
 
-        // Check if username contains only alphabets
-        const nameRegex = /^[A-Za-z]+$/; // Regex to allow only alphabets
+        const nameRegex = /^[A-Za-z]+$/; // Only-Alphabets ka RegeX
         if (!nameRegex.test(username)) {
             // console.error('Username contains invalid characters');
             toast.error('Username must contain only alphabets.');
             return;
         }
 
-        // Check if passwords match
         if (password !== passwordX) {
             console.error('Passwords do not match');
             toast.error('Passwords do not match. Please try again.');
             return;
         }
 
-        // Hash the password
-        // const hashedPassword = bcrypt.hashSync(password, 10); // Hashing the password
+        // Removed hashing because...... Why not. Server does it for us
+        // const hashedPassword = bcrypt.hashSync(password, 10); 
 
-        // Prepare data for API
         const userData = {
             email,
             username,
-            password, // Use hashed password
-            // password: hashedPassword, // Use hashed password
+            password, 
+            // password: hashedPassword, //ex-hashed password
         };
 
         fetch('https://formbot-backend-2mmu.onrender.com/register', {
@@ -71,13 +67,12 @@ const RegisterPage = () => {
         })
         .then(data => {
             // console.log('Registration successful:', data);
-            toast.success('Registration successful!'); // Notify user of success
+            toast.success('Registration successful!'); 
             window.location.href='/login'
-            // Handle successful registration (e.g., redirect to login)
         })
         .catch(error => {
             console.error('There was a problem with the registration:', error);
-            toast.error('Registration failed: ' + error.message); // Notify user of error
+            toast.error('Registration failed: ' + error.message); 
         });
     };
 
@@ -88,53 +83,75 @@ const RegisterPage = () => {
             {/* <h2>REGISTER</h2> */}
             <div>
             <label style={{paddingLeft:'1rem', color:'#ffffff'}}> Username </label> <br />
-            <input 
+            <div className="forEye">
+                <input 
                 type="name" 
                 placeholder="Username" 
                 value={username} 
                 onChange={(e) => setUsername(e.target.value)} 
-                className='input-fields' 
+                className='input-fields'
+                style={{backgroundColor:'#171923'}} 
             />
+            
+            <div style={{display: "inline", opacity:'0', gap:'1rem',alignItems:'center'}}> <img 
+                src={eyeSVG}  
+                style={{ cursor: 'pointer'  }} />   
+                </div>
+            </div>
             </div>
             <div>
             <label style={{paddingLeft:'1rem', color:'#ffffff'}}> E-Mail </label> <br />
-            <input 
+            <div className="forEye"><input 
                 type="email" 
                 placeholder="Email" 
                 value={email} 
                 onChange={(e) => setEmail(e.target.value)} 
-                
+                style={{backgroundColor:'#171923'}} 
                 className='input-fields' 
             />
+            
+            <div style={{display: "inline", opacity:'0', gap:'1rem',alignItems:'center'}}> <img 
+                src={eyeSVG} 
+                style={{ cursor: 'pointer'  }} />   
+                </div>
+            </div>
             </div>
             <div>
             <label style={{paddingLeft:'1rem', color:'#ffffff'}}> Password </label> <br />
+            <div className='forEye'>
             <input 
-                type={showPassword ? "text" : "password"} // Toggle input type
+                type={showPassword ? "text" : "password"} 
                 placeholder="Password" 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)} 
                 className='input-fields' 
             />
+            <div onClick={() => { setShowPassword(!showPassword)}} style={{display: "inline", gap:'1rem',alignItems:'center'}}> <img 
+                src={eyeSVG} 
+                alt="Show password"  
+                style={{ cursor: 'pointer'  }} />   
+                </div>
+                </div>
             </div>
             <div>
             <label style={{paddingLeft:'1rem', color:'#ffffff'}}> Confirm Password </label> <br />
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '1rem'}}>
             <input 
-                type={showPasswordX ? "text" : "password"} // Toggle input type
+                type={showPasswordX ? "text" : "password"} 
                 placeholder="Confirm Password" 
                 value={passwordX} 
                 onChange={(e) => setPasswordX(e.target.value)} 
                
                 className='input-fields' 
             />
+            <div onClick={() => { setShowPasswordX(!showPasswordX)}} style={{display: "inline", gap:'1rem',alignItems:'center'}}> <img 
+                src={eyeSVG} 
+                alt="Show password"  
+                style={{ cursor: 'pointer'  }} />   
+                </div>
+                </div>
             </div>
             
-            <div onClick={() => { setShowPassword(!showPassword); setShowPasswordX(!showPassword); }} style={{display: "flex", gap:'1rem', alignItems:'center'}}> <img 
-                src={eyeSVG} 
-                alt="All shall be revealed"  // Toggle visibility on click
-                style={{ cursor: 'pointer'  }} 
-            />  <p style={{color:"white"}}>All shall be revealed</p> 
-            </div>
             <button onClick={handleRegister} className='clickBtn' style={{ marginTop: '3vh', marginBottom:'3vh'}}>
                 Register Now
             </button>

@@ -13,14 +13,14 @@ function Workspace() {
     const [workspaces, setWorkspaces] = useState([]);
     const [currentWorkspace, setCurrentWorkspace] = useState('');
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [folders, setFolders] = useState([]); // State for folders
-    const [formbots, setFormbots] = useState([]); // State for formbots
-    const [currentFolder, setCurrentFolder] = useState('root'); // New state for current folder
-    const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
-    const [isShareModalOpen, setIsShareModalOpen] = useState(false); // State for share modal visibility
+    const [folders, setFolders] = useState([]); 
+    const [formbots, setFormbots] = useState([]); 
+    const [currentFolder, setCurrentFolder] = useState('root'); 
+    const [isModalOpen, setIsModalOpen] = useState(false); 
+    const [isShareModalOpen, setIsShareModalOpen] = useState(false); 
     const [Editable, setEditStatus] = useState(false);
     const navigate = useNavigate();
-    const [isFormBotModalOpen, setIsFormBotModalOpen] = useState(false); // State for FormBot modal visibility
+    const [isFormBotModalOpen, setIsFormBotModalOpen] = useState(false); 
     const [isDeleteFolderModalOpen, setIsDeleteFolderModalOpen] = useState(false);
     const [folderToDelete, setFolderToDelete] = useState('');
     const [isDeleteFormbotModalOpen, setIsDeleteFormbotModalOpen] = useState(false);
@@ -44,13 +44,13 @@ function Workspace() {
                     return response.json();
                 })
                 .then(data => {
-                    const userUsername = data.username; // Extract username from the response
+                    const userUsername = data.username; 
                     // console.log("here", data.username)
                     localStorage.setItem('fp1_username', data.username);
                     const workspaceId = userUsername + '_workspace';
                     setCurrentWorkspace(workspaceId);
                     setEditStatus(true)
-                    fetchFolders(workspaceId); // Fetch folders for the current workspace
+                    fetchFolders(workspaceId); 
                     fetchFormbots(workspaceId, currentFolder);
                 })
                 .catch(error => {
@@ -77,10 +77,9 @@ function Workspace() {
     }, []);
 
     useEffect(() => {
-        // Load dark mode preference from localStorage
         const darkModePreference = localStorage.getItem('darkMode') === 'true';
         if (darkModePreference !== isDarkMode) {
-            toggleDarkMode(); // Set the initial state based on localStorage
+            toggleDarkMode(); 
         }
     }, []);
 
@@ -92,10 +91,10 @@ function Workspace() {
                 throw new Error('Failed to fetch workspaces');
             }
             const data = await response.json();
-            setWorkspaces(data); // Update state with fetched workspaces
+            setWorkspaces(data); 
         } catch (error) {
             // console.error('Error fetching workspaces:', error);
-            toast.error('Error fetching workspaces: ' + error.message); // Notify user of error
+            toast.error('Error fetching workspaces: ' + error.message); 
         }
     };
 
@@ -103,7 +102,7 @@ function Workspace() {
         localStorage.removeItem('fp1_user_jwt');
         localStorage.removeItem('fp1_email');
         localStorage.getItem('fp1_username');
-        window.location.href = "/"// Redirect to homepage
+        window.location.href = "/"
     };
 
     const toggleDropdown = () => {
@@ -112,11 +111,10 @@ function Workspace() {
 
     const handleToggleDarkMode = () => {
         toggleDarkMode();
-        // Store the current dark mode preference in localStorage
         localStorage.setItem('darkMode', !isDarkMode);
     };
 
-    // New function to fetch folders from API
+
     const fetchFolders = async (workspaceName) => {
         try {
             const response = await fetch(`https://formbot-backend-2mmu.onrender.com/fetchFolders/${workspaceName}`, {
@@ -129,18 +127,16 @@ function Workspace() {
                 throw new Error('Failed to fetch folders');
             }
             const data = await response.json();
-            if (data.length === 0) { // Continue with the rest of the code 
+            if (data.length === 0) { 
                 return
             }
             else { setFolders(data); }
-            // Update state with fetched folders
         } catch (error) {
             // console.error('Error fetching folders:', error);
-            toast.error('Error fetching folders: ' + error.message); // Notify user of error
+            toast.error('Error fetching folders: ' + error.message); 
         }
     };
 
-    // New function to fetch formbots from API
     const fetchFormbots = async (workspaceId, folder) => {
         // console.log(workspaceId, folder)
         try {
@@ -155,32 +151,29 @@ function Workspace() {
             }
             const data = await response.json();
             // console.log(data, "deets");
-            setFormbots(data || []); // Update state with fetched formbots, default to empty array if no data
+            setFormbots(data || []); 
 
         } catch (error) {
             setFormbots([]);
             console.log('Possibly no formbots.', error);
-            // toast.error('Error fetching formbots: ' + error.message); // Notify user of error
+            // toast.error('Error fetching formbots: ' + error.message); 
         }
     };
 
-    // New function to handle folder deletion
     const handleDeleteFolder = (folderName) => {
         setFolderToDelete(folderName);
         setIsDeleteFolderModalOpen(true);
     };
 
-    // New function to handle formbot deletion
     const handleDeleteFormbot = (formbotName) => {
         setFormbotToDelete(formbotName);
         setIsDeleteFormbotModalOpen(true);
     };
 
-    // Function to handle folder creation with validation for name
     const handleCreateFolder = async (folderName) => {
         const email = localStorage.getItem('fp1_email');
         const workspaceId = currentWorkspace;
-        const validName = /^[A-Za-z]+$/; // Regex to check if the name contains only alphabets
+        const validName = /^[A-Za-z]+$/; // Only-Alphabets Regex
 
         if (!validName.test(folderName)) {
             toast.error('Folder name should contain only alphabets.');
@@ -202,22 +195,21 @@ function Workspace() {
                 return toast.error('Error creating Folder: ' + errorData.error);
             }
 
-            await fetchFolders(workspaceId); // Refresh folder list after creation
+            await fetchFolders(workspaceId); 
         } catch (error) {
             // console.error('Error creating folder:', error);
             toast.error('Error creating folder: ' + error.message);
         }
     };
 
-    // New function to create a formbot
+
     // const handleCreateFormbot = async (formbotName) => {
 
     // };
 
-    // New function to handle folder selection
     const handleFolderClick = async (folderPath) => {
-        setCurrentFolder(folderPath); // Update current folder state
-        await fetchFormbots(currentWorkspace, folderPath); // Fetch formbots in the selected folder
+        setCurrentFolder(folderPath);
+        await fetchFormbots(currentWorkspace, folderPath); 
     };
 
     const Slider = ({ isDarkMode, handleToggleDarkMode }) => (
@@ -225,16 +217,15 @@ function Workspace() {
     <div className="slider-thumb" style={{ width: '1.7rem', height: '1.7rem', backgroundColor: isDarkMode ? '#171923' : '#FFFFFF', background: isDarkMode? `${sun}` : `${moon}`, borderRadius: '50%', position: 'absolute', top: '1px', left: isDarkMode ? '1.7rem' : '1px', transition: 'left 0.2s', }} /> 
     </div>);
 
-
-    // Modal Component for Folder Creation
+    // The "unnamed" modal is the one for taking input for form name. OBVIOUSLY, I did this first. 
     const Modal = ({ isOpen, onClose, onCreate }) => {
         const [folderName, setFolderName] = useState('');
 
         const handleSubmit = () => {
             if (folderName) {
                 onCreate(folderName);
-                setFolderName(''); // Reset input
-                onClose(); // Close modal
+                setFolderName(''); 
+                onClose(); 
             }
         };
 
@@ -259,13 +250,12 @@ function Workspace() {
         );
     };
 
-    // Share Modal Component
     const ShareModal = ({ isOpen, onClose }) => {
         const [email, setEmail] = useState('');
-        const [permission, setPermission] = useState('view'); // Default permission
+        const [permission, setPermission] = useState('view'); 
 
         const handleInviteByEmail = async () => {
-            // Logic to invite by email
+            
             // console.log(`Inviting ${email} with ${permission} permission`);
 
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -280,37 +270,37 @@ function Workspace() {
             // }
 
             try {
-                const response = await fetch(`http://localhost:5000/updateWorkspace/${currentWorkspace}`, {
+                const response = await fetch(`https://formbot-backend-2mmu.onrender.com/updateWorkspace/${currentWorkspace}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        sharedWith: [{ email, access: permission }] // Add email with permission
+                        sharedWith: [{ email, access: permission }] 
                     }),
                 });
                 const data = await response.json();
                 if (!response.ok) {
                     throw new Error(data.error || "network error");
                 }
-                // console.log(data.message); // Log success message
-                toast.success(`Successfully invited *THAT* person (${email})!`); // Notify user of success
+                // console.log(data.message); 
+                toast.success(`Successfully invited *THAT* person (${email})!`); 
 
-                // Reset fields after inviting
+                
                 setEmail('');
                 onClose();
             } catch (error) {
                 // console.error('Error inviting by email:', error);
-                toast.error(`Error inviting *that* person (${email})` + error.message); // Notify user of error
+                toast.error(`Error inviting *that* person (${email})` + error.message); 
             }
         };
 
         const handleInviteByLink = () => {
-            const currentUrl = window.location.href; // Get the current page URL
-            let linkToCopy = currentUrl; // Default to current URL
+            const currentUrl = window.location.href; 
+            let linkToCopy = currentUrl; 
             linkToCopy = linkToCopy.replace('https://', '').replace('http://', '')
             linkToCopy = linkToCopy.split('/')[0] 
-            linkToCopy += `/workspace/?currentWorkspace=${currentWorkspace}&${permission}`; // Append workspace name for edit permission
+            linkToCopy += `/workspace/?currentWorkspace=${currentWorkspace}&${permission}`; 
 
             // if (permission === 'edit') {
             // }
@@ -318,15 +308,14 @@ function Workspace() {
             //     linkToCopy += `?currentWorkspace=${currentWorkspace}`+`${permission}`;
             // }
 
-            // Copy the link to the clipboard
             navigator.clipboard.writeText(linkToCopy)
                 .then(() => {
                     // console.log('Link copied to clipboard:', linkToCopy);
-                    toast.success('Link copied to clipboard!'); // Notify user
+                    toast.success('Link copied to clipboard!'); 
                 })
                 .catch(err => {
                     // console.error('Failed to copy link:', err);
-                    toast.error('Failed to copy link.'); // Notify user of error
+                    toast.error('Failed to copy link.'); 
                 });
 
             onClose();
@@ -362,17 +351,16 @@ function Workspace() {
         );
     };
 
-    // New Modal Component for FormBot Creation
     const FormBotModal = ({ isOpen, onClose }) => {
         const [formbotName, setFormbotName] = useState('');
-        const [commands, setCommands] = useState([]); // Initialize commands as an empty array
+        const [commands, setCommands] = useState([]); 
 
         const handleSubmit = async () => {
             if (formbotName) {
                 const email = localStorage.getItem('fp1_email');
                 const workspaceId = currentWorkspace;
-                const folderName = currentFolder; // Assuming currentFolder holds the name of the folder
-                const validName = /^[A-Za-z]+$/; // Regex to check if the name contains only alphabets
+                const folderName = currentFolder; 
+                const validName = /^[A-Za-z]+$/; 
 
                 if (!validName.test(formbotName)) {
                     toast.error('FormBot name should contain only alphabets.');
@@ -387,7 +375,7 @@ function Workspace() {
                         },
                         body: JSON.stringify({
                             name: formbotName,
-                            commands: commands, // Currently set to an empty array
+                            commands: commands, 
                             workspaceId: workspaceId,
                             folderName: folderName
                         }),
@@ -400,9 +388,9 @@ function Workspace() {
                     }
                     const data = await response.json();
                     window.location.href = `/formbot/${workspaceId}/${folderName}/${formbotName}`;
-                    await fetchFormbots(currentWorkspace, currentFolder); // Refresh formbot list after creation
-                    setFormbotName(''); // Reset input
-                    onClose(); // Close modal
+                    await fetchFormbots(currentWorkspace, currentFolder); 
+                    setFormbotName(''); 
+                    onClose(); 
                 } catch (error) {
                     // console.error('Error creating FormBot:', error);
                     toast.error('Error creating FormBot: ' + error.message);
@@ -430,7 +418,6 @@ function Workspace() {
         );
     };
 
-    // Delete Folder Confirmation Modal
     const DeleteFolderModal = ({ isOpen, onClose, onConfirm }) => {
         if (!isOpen) return null;
 
@@ -449,7 +436,6 @@ function Workspace() {
         );
     };
 
-    // Delete Formbot Confirmation Modal
     const DeleteFormbotModal = ({ isOpen, onClose, onConfirm }) => {
         if (!isOpen) return null;
 
@@ -468,9 +454,8 @@ function Workspace() {
         );
     };
 
-    // Actual deletion after confirmation
     const confirmDeleteFolder = async (folderName) => {
-            const workspaceId = currentWorkspace; // Use the current workspace ID
+            const workspaceId = currentWorkspace; 
     
             try {
                 const response = await fetch(`https://formbot-backend-2mmu.onrender.com/deleteFolder/${workspaceId}/folder/${folderName}`, {
@@ -484,11 +469,11 @@ function Workspace() {
                     throw new Error('Failed to delete folder');
                 }
     
-                // await fetchFolders(currentWorkspace); // Refresh folder list after deletion
+                // await fetchFolders(currentWorkspace); 
                 window.location.reload();
             } catch (error) {
                 // console.error('Error deleting folder:', error);
-                toast.error('Error deleting folder: ' + error.message); // Notify user of error
+                toast.error('Error deleting folder: ' + error.message); 
             }
     };
 
@@ -506,10 +491,10 @@ function Workspace() {
                     throw new Error('Failed to delete formbot');
                 }
                 
-                await fetchFormbots(currentWorkspace, currentFolder); // Refresh formbot list after deletion
+                await fetchFormbots(currentWorkspace, currentFolder); 
             } catch (error) {
                 // console.error('Error deleting formbot:', error);
-                toast.error('Error deleting formbot: ' + error.message); // Notify user of error
+                toast.error('Error deleting formbot: ' + error.message); 
             }
     };
     // THIS IS THE MAIN RETURN FUNCTION.
@@ -524,7 +509,7 @@ function Workspace() {
                             {workspaces.map(workspace => (
                                 <a key={workspace.name} onClick={() => {
                                     setCurrentWorkspace(workspace.name);
-                                    fetchFolders(workspace.name); // Fetch folders for the current workspace
+                                    fetchFolders(workspace.name); 
                                     setCurrentFolder('root')
                                     fetchFormbots(workspace.name, 'root');
                                     const entry = workspace.sharedWith.find(user => user.email === localStorage.getItem('fp1_email'));
@@ -534,21 +519,20 @@ function Workspace() {
                                     else {
                                         setEditStatus(false);
                                     }
-                                    setDropdownOpen(false); // Close dropdown on selection
+                                    setDropdownOpen(false); 
                                 }}>
                                     {workspace.name}
                                 </a>
                             ))}
                             {localStorage.getItem('fp1_email') && <a onClick={() => {
-                                // Navigate to settings
                                 window.location.href = '/settings';
-                                setDropdownOpen(false); // Close dropdown
+                                setDropdownOpen(false); 
                             }}>
                                 Settings
                             </a>}
                             {localStorage.getItem('fp1_email') && <a onClick={() => {
                                 handleLogout();
-                                setDropdownOpen(false); // Close dropdown
+                                setDropdownOpen(false); 
                             }}>
                                 Logout
                             </a>}
@@ -557,9 +541,9 @@ function Workspace() {
                 </div>
                 {/* <button onClick={handleToggleDarkMode} style={{color: #1A5FFF }}> </button> */}
                 <Slider isDarkMode={isDarkMode} handleToggleDarkMode={handleToggleDarkMode} />
-                {localStorage.getItem('fp1_email') && <button className='clickBtn' style={{maxWidth:'5rem'}} onClick={() => setIsShareModalOpen(true)}>Share</button>}
+                {localStorage.getItem('fp1_email') && <button className='clickBtn'  onClick={() => setIsShareModalOpen(true)}>Share</button>}
             </nav>
-            {/* New file explorer UI */}
+
             <div className="file-explorer">
                 <div className="folders">
                     {Editable && <div onClick={() => setIsModalOpen(true)} className='folder'>Create Folder</div>}
@@ -583,22 +567,21 @@ function Workspace() {
                     ))}
                 </div>
             </div>
-            {/* Additional component content */}
 
-            {/* Modal for folder creation */}
+            
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 onCreate={handleCreateFolder}
             />
 
-            {/* Share Modal */}
+            
             <ShareModal
                 isOpen={isShareModalOpen}
                 onClose={() => setIsShareModalOpen(false)}
             />
 
-            {/* Modal for FormBot creation */}
+    
             <FormBotModal
                 isOpen={isFormBotModalOpen}
                 onClose={() => setIsFormBotModalOpen(false)}
