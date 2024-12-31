@@ -7,6 +7,8 @@ import bgLandArch from '../assets/bgLandArch.svg'
 import bgLandMC from '../assets/bgLandMC.svg'
 import '../index.css'
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -20,6 +22,7 @@ const LandingPage = () => {
 
     return (
         <div style={{width: '100%'}}>
+            <ToastContainer></ToastContainer>
         <nav className='landingNav' style={{  }}>
             <div style={{ display: 'flex', alignItems: 'center', marginLeft: '1.5rem'}}>
                 <img src={mainLogo} alt="Icon" style={{ height: '40px', display: 'inline' }} />
@@ -32,7 +35,7 @@ const LandingPage = () => {
                     style={{margin: '1rem 1rem 1rem 0', minWidth: '40px', height:'2.5rem', borderRadius: '0.5rem', padding: '0.5rem 1rem', border: '2px solid #7EA6FF', backgroundColor: '#171923', color:'#7EA6FF' }}>
                     Sign In
                 </button>
-                <button onClick={() =>  window.location.href = '/register'} className='clickBtn' style={{margin: '1rem 0 1rem 0', minWidth: '40px', border: '2px solid #1A5FFF', maxWidth:'10rem'}}>Create a Form Bot</button>
+                <button onClick={() =>  window.location.href = '/register'} className='clickBtn' style={{margin: '1rem 0 1rem 0', border: '2px solid #1A5FFF', maxWidth:'9rem'}}>Create Form Bot</button>
             </div>
         </nav>
         <div className='landing-main' style={{ backgroundImage: `url(${bgLandArch}), url(${bgLandMC}), url(${bgLandTriangle}) ` }}>
@@ -41,14 +44,14 @@ const LandingPage = () => {
             <p style={{ fontSize: '1.2rem', color: '#ffffff', margin:'0 0 3vh 0' }}>Typebot gives you powerful blocks to create unique chat experiences. <br />
             Embed them anywhere on your web/mobile apps and start collecting results like magic. <br />
             NOTE - The backend server can take 1min+ to wake from sleep on the first use</p>
-            <button className='clickBtn' style={{  }} onClick={() =>  window.location.href = '/login'}>
+            <button className='clickBtn' style={{  }} onClick={() =>  window.location.href = '/register'}>
                 Create a ChatBot for FREE
             </button> <br />
             <img src={LandImg} alt="Landing" style={{ width: '66vw', margin: '5vh 0 10vh 0', borderRadius: '10px' }} />
         </div>
 
-        <footer style={{ backgroundColor: '#171923', color: '#ffffff', padding: '20px 0', marginTop: '0' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-around', maxWidth: '1200px', margin: '0 auto' }}>
+        <footer style={{ backgroundColor: '#171923', color: '#ffffff', padding: '20px 0', margin: '0' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-around', margin: '0 1rem', gap:'0.5rem'}}>
                 <div style={{ textAlign: 'left' }}>
                     <h4 style={{ }}>FormBot</h4>
                     <img src={mainLogo} alt="Logo" style={{ height: '3rem', marginTop: '10px' }} />
@@ -65,22 +68,22 @@ const LandingPage = () => {
                     </ul>
                 </div>
                 <div style={{ textAlign: 'left' }}>
-                    <h4>Community</h4>
+                    <h4>Project Details</h4>
                     <ul style={{ listStyleType: 'none', padding: 0 }}>
-                        <li style={{padding: '0.8rem 0 0 0'}}><a href="#discord" style={{  }}>Discord</a></li>
-                        <li style={{padding: '0.8rem 0 0 0'}}><a href="#github" style={{  }}>GitHub</a></li>
-                        <li style={{padding: '0.8rem 0 0 0'}}><a href="#twitter" style={{  }}>Twitter</a></li>
-                        <li style={{padding: '0.8rem 0 0 0'}}><a href="#linkedin" style={{  }}>LinkedIn</a></li>
-                        <li style={{padding: '0.8rem 0 2rem 0'}}><a href="#ossfriends" style={{  }}>OSSFriends</a></li>
+                        <li style={{padding: '0.8rem 0 0 0'}}><a href="https://github.com/NikhilPaleti/formbot_backend" style={{  }}>Backend Code (GitHub)</a></li>
+                        <li style={{padding: '0.8rem 0 0 0'}}><a href="https://github.com/NikhilPaleti/formbotfrontend" style={{  }}>Frontend Code (GitHub)</a></li>
+                        <li style={{padding: '0.8rem 0 0 0'}}><a href="https://formbotfrontend.vercel.app/" style={{  }}>Frontend Deploy Link (Vercel)</a></li>
+                        <li style={{padding: '0.8rem 0 0 0'}}><a href="https://formbot-backend-2mmu.onrender.com" style={{  }}>Backend Deploy Link (Render)</a></li>
+                        {/* <li style={{padding: '0.8rem 0 2rem 0'}}><a href="#ossfriends" style={{  }}>OSSFriends</a></li> */}
                     </ul>
                 </div>
                 <div style={{ textAlign: 'left' }}>
-                    <h4>Company</h4>
+                    <h4> Nikhil - The Developer </h4>
                     <ul style={{ listStyleType: 'none', padding: 0 }}>
-                        <li style={{padding: '0.8rem 0 0 0'}}><a href="#about" style={{  }}>About</a></li>
-                        <li style={{padding: '0.8rem 0 0 0'}}><a href="#contact" style={{  }}>Contact</a></li>
-                        <li style={{padding: '0.8rem 0 0 0'}}><a href="#terms" style={{  }}>Terms of Service</a></li>
-                        <li style={{padding: '0.8rem 0 0 0'}}><a href="#privacy" style={{  }}>Privacy Policy</a></li>
+                        <li style={{padding: '0.8rem 0 0 0'}}><a href="https://www.linkedin.com/in/nikhilpaleti/" style={{  }}>LinkedIn</a></li>
+                        <li style={{padding: '0.8rem 0 0 0'}}><a href="https://github.com/NikhilPaleti/" style={{  }}>GitHub</a></li>
+                        <li style={{padding: '0.8rem 0 0 0'}}><a onClick={() => { navigator.clipboard.writeText("paletinikhil@gmail.com"); toast.success("Copied email address of the developer"); }} style={{  }}> E-Mail </a></li>
+                        <li style={{padding: '0.8rem 0 0 0'}}><a onClick={() => { navigator.clipboard.writeText("+91-9391952329"); toast.success("Copied Phone Number of developer"); }} style={{  }}> Phone </a></li>
                     </ul>
                 </div>
             </div>

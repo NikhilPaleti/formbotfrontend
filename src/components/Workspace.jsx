@@ -29,6 +29,9 @@ function Workspace() {
 
     useEffect(() => {
         fetchWorkspaces();
+        if (!localStorage.getItem('fp1_user_jwt')){
+            navigate("/login")
+        }
         if (localStorage.getItem('fp1_email')) {
             // console.log("all OK")
             fetch(`https://formbot-backend-2mmu.onrender.com/alluserdetails?email=${localStorage.getItem('fp1_email')}`, {
