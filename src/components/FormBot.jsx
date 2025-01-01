@@ -30,6 +30,8 @@ const FormBot = () => {
         const darkModePreference = localStorage.getItem('darkMode') === 'true';
         if (darkModePreference !== isDarkMode) {
             toggleDarkMode();
+        } if (!localStorage.getItem('fp1_user_jwt')) {
+            navigate("/login")
         }
         setFormName(formbotId);
     }, []);
@@ -39,10 +41,11 @@ const FormBot = () => {
     };
 
     const handleTabChange = (tab) => {
-        if(wholeForm.length !== 0) {
+        if (wholeForm.length !== 0) {
             console.log(wholeForm);
             setSelectedButton(tab)
-            setActiveTab(tab);}
+            setActiveTab(tab);
+        }
     };
 
     const handleToggleDarkMode = () => {
@@ -123,7 +126,7 @@ const FormBot = () => {
 
         if (!allOutputsFilled) {
             toast.error('Please fill in all output fields before saving.');
-            return; 
+            return;
         }
 
         try {
@@ -201,15 +204,15 @@ const FormBot = () => {
                     onChange={handleFormNameChange}
                     className='input-fields'
                 />
-                <div className='formNavButtonContainer'> 
+                <div className='formNavButtonContainer'>
                     <button onClick={() => handleTabChange('Form')} className={selectedButton === 'Form' ? 'navButton select' : 'navButton'}>Form</button>
                     <button onClick={() => handleTabChange('Response')} className={selectedButton === 'Response' ? 'navButton select' : 'navButton'}>Response</button>
                 </div>
                 <Slider isDarkMode={isDarkMode} handleToggleDarkMode={handleToggleDarkMode} />
                 <div className='formNavButtonContainer'>
                     <button className='clickBtn' onClick={handleShare}>Share</button>
-                    <button className='clickBtn' style = {{backgroundColor:'#4ADE80cc'}} onClick={handleSave}>Save</button>
-                    <p onClick={() => window.location.href = '/workspace' }> ❌ </p>
+                    <button className='clickBtn' style={{ backgroundColor: '#4ADE80cc' }} onClick={handleSave}>Save</button>
+                    <p onClick={() => window.location.href = '/workspace'}> ❌ </p>
                 </div>
             </nav>
             {activeTab === 'Form' && (
@@ -220,36 +223,36 @@ const FormBot = () => {
                         <div className='IOOptions'>
                             <br />
                             <button onClick={() => handleButtonClick('output-text')}>
-                                <img src={o_text} style={{backgroundColor: 'rgba(0,0,0,0)', margin:'0 1rem 0 0'}} />
+                                <img src={o_text} style={{ backgroundColor: 'rgba(0,0,0,0)', margin: '0 1rem 0 0' }} />
                                 Text
-                                </button>
+                            </button>
                             <button onClick={() => handleButtonClick('output-image')}>
-                                <img src={o_image} style={{backgroundColor: 'rgba(0,0,0,0)', margin:'0 1rem 0 0'}} />
+                                <img src={o_image} style={{ backgroundColor: 'rgba(0,0,0,0)', margin: '0 1rem 0 0' }} />
                                 Image/GIF
-                                </button>
+                            </button>
                         </div>
                         <h4 style={{ marginLeft: '1rem', backgroundColor: 'rgba(0,0,0,0)' }}>User Response Options</h4>
                         <div className='IOOptions'>
                             <button onClick={() => handleButtonClick('input-text')}>
-                                <img src={i_text} style={{backgroundColor: 'rgba(0,0,0,0)', margin:'0 1rem 0 0'}} />
+                                <img src={i_text} style={{ backgroundColor: 'rgba(0,0,0,0)', margin: '0 1rem 0 0' }} />
                                 Text
-                                </button>
+                            </button>
                             <button onClick={() => handleButtonClick('input-number')}>
-                                <img src={i_number} style={{backgroundColor: 'rgba(0,0,0,0)', margin:'0 1rem 0 0'}} />
+                                <img src={i_number} style={{ backgroundColor: 'rgba(0,0,0,0)', margin: '0 1rem 0 0' }} />
                                 Number
-                                </button>
+                            </button>
                             <button onClick={() => handleButtonClick('input-email')}>
-                                <img src={i_email} style={{backgroundColor: 'rgba(0,0,0,0)', margin:'0 1rem 0 0'}} />
+                                <img src={i_email} style={{ backgroundColor: 'rgba(0,0,0,0)', margin: '0 1rem 0 0' }} />
                                 Email
-                                </button>
+                            </button>
                             <button onClick={() => handleButtonClick('input-date')}>
-                                <img src={i_date} style={{backgroundColor: 'rgba(0,0,0,0)', margin:'0 1rem 0 0'}} />
+                                <img src={i_date} style={{ backgroundColor: 'rgba(0,0,0,0)', margin: '0 1rem 0 0' }} />
                                 Date
-                                </button>
+                            </button>
                             <button onClick={() => handleButtonClick('input-rating')}>
-                                <img src={i_rating} style={{backgroundColor: 'rgba(0,0,0,0)', margin:'0 1rem 0 0'}} />
+                                <img src={i_rating} style={{ backgroundColor: 'rgba(0,0,0,0)', margin: '0 1rem 0 0' }} />
                                 Rating
-                                </button>
+                            </button>
                         </div>
                     </div>
                     <div className={isDarkMode ? 'dark-mode formElementList' : 'light-mode formElementList'} style={{}}>
@@ -267,7 +270,7 @@ const FormBot = () => {
                                                 />
                                             )}
 
-                                            {/* {item.type.startsWith('output') ? 'output' : 'input'} - */ item.type.replace('input-', '').replace('output-', '') }
+                                            {/* {item.type.startsWith('output') ? 'output' : 'input'} - */ item.type.replace('input-', '').replace('output-', '')}
                                         </h2>
                                         <img src={trashIcon} onClick={() => handleDelete(index)} />
                                     </div>
@@ -316,12 +319,12 @@ const FormBot = () => {
                         <MyTable data={wholeForm} />
                     </div>
                     <div className='chart-container'>
-                        
-                        <PieChart data={[ { title: 'Filled', value: wholeForm.filled_forms.length, color: '#1A5FFF' }, 
-                            { title: 'Total', value:wholeForm.opened-wholeForm.filled_forms.length, color: '#AAAAAA' } ]}
-                            style={{width:'30%'}}
+
+                        <PieChart data={[{ title: 'Filled', value: wholeForm.filled_forms.length, color: '#1A5FFF' },
+                        { title: 'Total', value: wholeForm.opened - wholeForm.filled_forms.length, color: '#AAAAAA' }]}
+                            style={{ width: '30%' }}
                             lineWidth={25}></PieChart>
-                            <p className='stat' style={{height: '30%'}}> Completion Rate <br /> {wholeForm.filled_forms.length/wholeForm.opened}</p>
+                        <p className='stat' style={{ height: '30%' }}> Completion Rate <br /> {wholeForm.filled_forms.length / wholeForm.opened}</p>
                     </div>
                 </div>
             )}

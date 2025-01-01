@@ -60,10 +60,10 @@ const Answer = () => {
                 setTimeout(() => {
                     setCurrentCommandIndex(index + 1);
                     handleCommand(index + 1);
-                }, 1500);
+                }, 1000);
             }
         } else {
-            setTimeout(() => setShowThankYou(true), 1500);
+            setTimeout(() => setShowThankYou(true), 3500);
         }
     };
 
