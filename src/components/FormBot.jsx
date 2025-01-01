@@ -16,6 +16,7 @@ import i_rating from '../assets/rating.svg'
 import i_number from '../assets/number.svg'
 import o_image from '../assets/image.svg'
 import { PieChart } from 'react-minimal-pie-chart';
+import { useNavigate } from 'react-router-dom'
 
 const FormBot = () => {
     const { isDarkMode, toggleDarkMode } = useDarkMode();
@@ -24,7 +25,8 @@ const FormBot = () => {
     const [activeTab, setActiveTab] = useState('Form');
     const [formData, setFormData] = useState([]);
     const [wholeForm, setWholeForm] = useState([]);
-    const [selectedButton, setSelectedButton] = useState('Form');
+    const [selectedButton, setSelectedButton] = useState('Form');    
+    const navigate = useNavigate();
 
     useEffect(() => {
         const darkModePreference = localStorage.getItem('darkMode') === 'true';

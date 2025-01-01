@@ -5,6 +5,7 @@ import logoutIcon from '../assets/logout.svg'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import eyeSVG from '../assets/eye.svg';
+import { useNavigate } from 'react-router-dom'
 
 function Settings() {
     const { isDarkMode, toggleDarkMode } = useDarkMode();
@@ -14,6 +15,7 @@ function Settings() {
     const [newPassword, setNewPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordX, setShowPasswordX] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!localStorage.getItem('fp1_user_jwt')) {
